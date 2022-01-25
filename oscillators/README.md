@@ -1,4 +1,4 @@
-# Van der Pol oscillator
+# Oscillators
 
 Plots the phase portrait and displacement of the various oscillators.
 
