@@ -2,25 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from scipy.integrate import solve_ivp
+import oscillators
+
+# define the oscillator to be used
+args = (5, 2, 3, 4)
+oscillator = lambda t, z: oscillators.cartwright_littlewood(t, z, *args)
+initial = [10, 10]
 
 
 tmax = 500
 dt = 0.01
 
 
-def van_der_pol(t, z, gamma=1):
-    """van der Pol equation. z is a 2x1 array of the form [x, dx/dt]
-    returns [dx/dt, d2x/dt2]"""
-    x, y = z  # y=dx/dt
-
-    xdot = y
-    ydot = -x + y * gamma * (1 - x ** 2)
-
-    return [xdot, ydot]
-
-
 # solve ode
-solver = solve_ivp(van_der_pol, [0, tmax], [0, 0.001], dense_output=True)
+solver = solve_ivp(oscillator, [0, tmax], initial, dense_output=True)
 times = np.arange(0, tmax, dt)
 out_arr = solver.sol(times)
 
@@ -46,11 +41,11 @@ def animate(i):
     else:
         trace.set_data(*out_arr.T[:1])
 
-    return line, trace
+    return point, trace
 
 
 ani = FuncAnimation(fig, animate, len(times), interval=dt * 100, blit=True)
 plt.xlabel("position")
 plt.ylabel("velocity")
-plt.title("Phase portrait of Van der Pol Oscillator")
+plt.title("Phase portrait")
 plt.show()
