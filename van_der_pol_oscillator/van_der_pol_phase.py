@@ -4,7 +4,7 @@ from matplotlib.animation import FuncAnimation
 from scipy.integrate import solve_ivp
 
 
-tmax = 50
+tmax = 500
 dt = 0.01
 
 
@@ -28,8 +28,8 @@ out_arr = solver.sol(times)
 # configure matplotlib
 fig = plt.figure()
 ax = fig.add_subplot(
-    xlim=(0, tmax),
-    ylim=(1.1 * min(out_arr[0]), 1.1 * max(out_arr[0])),
+    xlim=(1.1 * min(out_arr[0]), 1.1 * max(out_arr[0])),
+    ylim=(1.1 * min(out_arr[1]), 1.1 * max(out_arr[1])),
 )
 ax.grid()
 
@@ -38,18 +38,19 @@ ax.grid()
 
 
 def animate(i):
-    point.set_data(times[i], out_arr[0][i])
+    x, y = out_arr.T[i]
+    point.set_data(x, y)
 
     if i:
-        trace.set_data(times[:i], out_arr[0][:i])
+        trace.set_data(*out_arr.T[: i + 1].T)
     else:
-        trace.set_data(times[i], out_arr[0][1])
+        trace.set_data(*out_arr.T[:1])
 
-    return point, trace
+    return line, trace
 
 
 ani = FuncAnimation(fig, animate, len(times), interval=dt * 100, blit=True)
-plt.xlabel("time")
-plt.ylabel("displacement")
-plt.title("Displacement of Van der Pol Oscillator")
+plt.xlabel("position")
+plt.ylabel("velocity")
+plt.title("Phase portrait of Van der Pol Oscillator")
 plt.show()
