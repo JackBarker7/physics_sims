@@ -12,8 +12,8 @@ def van_der_pol(t, z, gamma=1):
     return [xdot, ydot]
 
 
-def amosov(t, z, gamma=1):
-    """Amosov equation. z is a 2x1 array of the form [x, dx/dt]
+def anosov(t, z, gamma=1):
+    """Anosov's equation. z is a 2x1 array of the form [x, dx/dt]
     returns [dx/dt, d2x/dt2]"""
     x, y = z  # y=dx/dt
 
