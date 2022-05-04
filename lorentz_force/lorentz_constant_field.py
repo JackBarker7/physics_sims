@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-E = np.array([0, 1, 2])
-B = np.array([0.5, 0, 1])
+E = np.array([0, 0, 0])
+B = np.array([1, 0, 0])
 q = 1
 c = 1
 m = 1
@@ -21,7 +21,7 @@ def F(v: np.ndarray):
     return q * (E + (1 / c) * np.cross(v, B))
 
 
-vels[0] = np.array([0, 0, 0])
+vels[0] = np.array([np.cos(np.radians(50)), np.sin(np.radians(50)), 0])
 poss[0] = np.array([0, 0, 0])
 accs[0] = F(vels[0])
 
